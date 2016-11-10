@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playGame(View view) {
+        // goes to second screen to start playing game
         Intent startGame = new Intent(this, playGame.class);
         startActivity(startGame);
         finish();
