@@ -6,7 +6,6 @@ import android.content.res.AssetManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.Context;
 import android.content.Intent;
 
 import java.io.IOException;
@@ -30,10 +29,7 @@ public class playGame extends AppCompatActivity {
             readFile = am.open(file);
         } catch (IOException e) {
             // display toast if file does not exist to catch error
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, "File not found", duration);
-            toast.show();
+            Toast.makeText(this, "File not found.", Toast.LENGTH_SHORT).show();
         }
         // get story class
         story = new Story(readFile);
@@ -62,8 +58,15 @@ public class playGame extends AppCompatActivity {
 
     public void fillIn(View view) {
         EditText fillInText = (EditText) findViewById(R.id.textField);
-        // gets user input to store in story
-        story.fillInPlaceholder(fillInText.getText().toString());
+        // get length of value given by user to check if it isn't empty
+        int stringLength = fillInText.getText().toString().length();
+        if (stringLength != 0) {
+            // gets user input to store in story if user has given valid answer
+            story.fillInPlaceholder(fillInText.getText().toString());
+        } else {
+            // tells user to give a valid answer
+            Toast.makeText(this, "Please fill in your word.", Toast.LENGTH_SHORT).show();
+        }
         // if more placeholders left, keep on asking for input
         if (story.getPlaceholderRemainingCount() != 0) {
             fillInText.setText("");
